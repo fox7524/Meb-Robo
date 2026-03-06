@@ -1,2 +1,2 @@
-# Meb-Robo
-2026 Turkey MEB robotics competition maze solver code and design repository
+# MEB-Robo
+2026 MEB robot labirent çözen robot yarışma robotu github reposu

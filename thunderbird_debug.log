@@ -1,0 +1,6 @@
+2026-03-03 21:38:05,910 ERROR thunderbird: Uncaught exception
+Traceback (most recent call last):
+  File "/Users/fox/Documents/PROJECTS/AI/foxAI/main.py", line 61, in <module>
+    status_label.setAlignment(Qt.AlignCenter)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'setAlignment'
