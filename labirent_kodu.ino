@@ -4,6 +4,7 @@
 #include <SPI.h>
 #include <Servo.h>
 #include <Wire.h>
+#include <MPU6050.h>
 
 //hcsr04 pin ad atamaları
 #const int HCSR_1 = 2;
@@ -19,21 +20,17 @@
 #const int scl = ;
 //MOTORLAR
 //Sağ ön motor pin-isim atamaları
-#const int FR_IN1 = 15;
-#const int FR_IN2 = 16;
-#const int FR_PWM = 17;
+#const int R_IN1 = 15;
+#const int R_IN2 = 16;
+#const int R_PWM = 17;
  //sol ön motor pin-isim atamaları
-#const int FL_IN1 = 18;
-#const int FL_IN2 = 19;
-#const int FL_PWM = 20;
-//sağ arka motor pin-isim atamaları
-#const int RR_IN1 = 21;
-#const int RR_IN2 = 22;
-#const int RR_PWM = 23;
-//sol arka motor pin-isim atamaları
-#const int RL_IN1 = 24;
-#const int RL_IN2 = 25;
-#const int RL_PWM = 26;
+#const int L_IN1 = 18;
+#const int L_IN2 = 19;
+#const int L_PWM = 20;
+
+#const int Starterr = 0;
+
+#define button1 = LOW;
 
 
 
@@ -49,120 +46,117 @@ pinMode(HCSR_2, INPUT);
 pinMode(HCSR_3, INPUT);
 pinMode(HCSR_4, INPUT);
 //SD kart modülü pin atamaları
+
 pinMode(miso, );
 pinMode(mosi, );
 pinMode(sck, );
 pinMode(scl, );
 
 //motor pin atamaları sektörü
-//sağ ön motor kontrol pinleri
-pinMode(FR_IN1);
-pinMode(FR_IN2);
-pinMode(FR_PWM);
-//sol ön motor kontrol pinleri
-pinMode(FL_IN1);
-pinMode(FL_IN2);
-pinMode(FL_PWM);
-//Sağ arka motor kontrol pinleri
-pinMode(RR_IN1);
-pinMode(RR_IN2);
-pinMode(RR_PWM);
-//sol arka kontrol pinleri
-pinMode(RL_IN1);
-pinMode(RL_IN2);
-pinMode(RL_PWM);
+//sağ motor kontrol pinleri
+pinMode(R_IN1, OUTPUT);
+pinMode(R_IN2, OUTPUT);
+pinMode(R_PWM, OUTPUT);
+//sol motor kontrol pinleri
+pinMode(L_IN1, OUTPUT);
+pinMode(L_IN2, OUTPUT);
+pinMode(L_PWM, OUTPUT);
+
+
 }
 
 void loop() {
-
+if( int Starterr == 1){
+starter()
+search_algorithm()
+}
     
 }
 
+void checker(){
+    if(button1 == HIGH){
+        int Starter = 1;
+    }
 
-void searcher(){
+}
+
+void starter(){
+Serial.print("Starter started");
+    delay(1000);
+
+}
+void search_algorithm(){
 
 
 }
 
 void ileri(){
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FL_IN1, HIGH);
-digitalWrite(RR_IN1, HIGH);
-digitalWrite(RL_IN1, HIGH);
+digitalWrite(L_IN1, HIGH);
+digitalWrite(R_IN1, HIGH);
 
-digitalWrite(FR_IN1, LOW);
-digitalWrite(FL_IN1, LOW);
-digitalWrite(RR_IN1, LOW);
-digitalWrite(RL_IN1, LOW);
 
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
+digitalWrite(L_IN1, LOW);
+digitalWrite(R_IN1, LOW);
+
+
+analogWrite(L_PWM, 255);
+analogWrite(R_PWM, 255);
+
 
 }
 
 void geri(){
-digitalWrite(FR_IN1, LOW);
-digitalWrite(FL_IN1, LOW);
-digitalWrite(RR_IN1, LOW);
-digitalWrite(RL_IN1, LOW);
-
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FL_IN1, HIGH);
-digitalWrite(RR_IN1, HIGH);
-digitalWrite(RL_IN1, HIGH);
-
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
-analogWrite(FR_PWM, 255);
-
-}
-void sol(){
+digitalWrite(L_IN1, LOW);
+digitalWrite(R_IN1, LOW);
 
 
-    
-}
-void sag(){
+digitalWrite(L_IN1, HIGH);
+digitalWrite(R_IN1, HIGH);
 
-    
+
+analogWrite(L_PWM, 255);
+analogWrite(R_PWM, 255);
+
+
 }
 void sag360(){
+digitalWrite(L_IN1, HIGH);
+digitalWrite(R_IN1, LOW);
+
+digitalWrite(L_IN1, LOW);
+digitalWrite(R_IN1, HIGH);
+
+analogWrite(L_PWM, 255);
+analogWrite(R_PWM, 255);
 
     
 }
 void sol360(){
 
+digitalWrite(L_IN1, LOW);
+digitalWrite(R_IN1, HIGH);
+
+digitalWrite(L_IN1, HIGH);
+digitalWrite(R_IN1, LOW);
+
+analogWrite(L_PWM, 255);
+analogWrite(R_PWM, 255);
     
 }
 
-void sagon(){
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FR_IN1, HIGH);
+void sag(){
+digitalWrite(R_IN1, HIGH);
+digitalWrite(R_IN1, HIGH);
 
-analogWrite(FR_PWM, 255);
+analogWrite(R_PWM, 255);
     
 }
-void solon(){
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FR_IN1, HIGH);
+void sol(){
+digitalWrite(L_IN1, HIGH);
+digitalWrite(L_IN1, HIGH);
 
-analogWrite(FR_PWM, 255);
+analogWrite(L_PWM, 255);
     
 }
-void sagarka(){
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FR_IN1, HIGH);
 
-analogWrite(FR_PWM, 255);
-
-}
-void solarka(){
-digitalWrite(FR_IN1, HIGH);
-digitalWrite(FR_IN1, HIGH);
-
-analogWrite(FR_PWM, 255);
-
-}
 
