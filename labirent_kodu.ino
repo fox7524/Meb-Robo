@@ -30,8 +30,20 @@
 
 #const int Starterr = 0;
 
-#define button1 = LOW;
+#const int button1 = LOW;
+// Maze dimensions
+#const int MAZE_SIZE = 16;
 
+// Array to store the "water" distances to the center
+int distances[MAZE_SIZE][MAZE_SIZE];
+
+// Array to store wall data (using binary: 1=North, 2=East, 4=South, 8=West)
+int walls[MAZE_SIZE][MAZE_SIZE];
+
+// The robot's current position and heading
+int currentX = 0; // Starting X coordinate
+int currentY = 0; // Starting Y coordinate
+int currentHeading = 0; // 0=North, 1=East, 2=South, 3=West
 
 
 void setup() {
@@ -86,7 +98,34 @@ Serial.print("Starter started");
 
 }
 void search_algorithm(){
+// Step 1: Read the Environment
+    // Trigger HC-SR04 sensors one by one (Front, Left, Right)
+    bool wallFront = checkFrontSensor(); 
+    bool wallLeft = checkLeftSensor();
+    bool wallRight = checkRightSensor();
 
+    // Step 2: Update the Internal Map
+    // Convert relative walls (Front/Left/Right) to absolute walls (North/South/East/West)
+    // based on currentHeading, then save to the walls[][] array.
+    updateWallsMap(currentX, currentY, wallFront, wallLeft, wallRight);
+
+    // Step 3: Recalculate the Distances (The actual "Flood Fill")
+    // If we found new walls, the old shortest path might be blocked. 
+    // We must recalculate the "water flow" from the center to our current position.
+    updateDistances(); 
+
+    // Step 4: Determine the Best Next Move
+    // Look at the accessible neighboring cells (North, South, East, West)
+    // and find the one with the LOWEST distance value.
+    int nextDirection = findLowestNeighbor(currentX, currentY);
+
+    // Step 5: Execute the Move
+    // Turn the chassis to face the nextDirection, then drive forward one cell.
+    executeMove(nextDirection);
+
+    // Step 6: Update Position
+    // Update currentX and currentY based on the move we just made.
+    updatePositionTracker(nextDirection);
 
 }
 
