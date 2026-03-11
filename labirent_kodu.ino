@@ -39,7 +39,7 @@ int distances[MAZE_SIZE][MAZE_SIZE];
 
 // Array to store wall data (using binary: 1=North, 2=East, 4=South, 8=West)
 int walls[MAZE_SIZE][MAZE_SIZE];
-
+int walls2[MAZE_SIZE_2][MAZE_SIZE_2]
 // The robot's current position and heading
 int currentX = 0; // Starting X coordinate
 int currentY = 0; // Starting Y coordinate
