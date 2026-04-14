@@ -99,33 +99,7 @@ Serial.print("Starter started");
 }
 void search_algorithm(){
 // Step 1: Read the Environment
-    // Trigger HC-SR04 sensors one by one (Front, Left, Right)
-    bool wallFront = checkFrontSensor(); 
-    bool wallLeft = checkLeftSensor();
-    bool wallRight = checkRightSensor();
-
-    // Step 2: Update the Internal Map
-    // Convert relative walls (Front/Left/Right) to absolute walls (North/South/East/West)
-    // based on currentHeading, then save to the walls[][] array.
-    updateWallsMap(currentX, currentY, wallFront, wallLeft, wallRight);
-
-    // Step 3: Recalculate the Distances (The actual "Flood Fill")
-    // If we found new walls, the old shortest path might be blocked. 
-    // We must recalculate the "water flow" from the center to our current position.
-    updateDistances(); 
-
-    // Step 4: Determine the Best Next Move
-    // Look at the accessible neighboring cells (North, South, East, West)
-    // and find the one with the LOWEST distance value.
-    int nextDirection = findLowestNeighbor(currentX, currentY);
-
-    // Step 5: Execute the Move
-    // Turn the chassis to face the nextDirection, then drive forward one cell.
-    executeMove(nextDirection);
-
-    // Step 6: Update Position
-    // Update currentX and currentY based on the move we just made.
-    updatePositionTracker(nextDirection);
+  
 
 }
 
